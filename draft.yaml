@@ -1,0 +1,180 @@
+models:
+  User:
+    name: string
+    email: nullable string
+    email_verified_at: nullable timestamp
+    country_id: nullable string
+    phone: string
+    phone_verified_at: nullable timestamp
+    password: string
+    role_id: integer
+    is_blocked: tinyInteger
+    device_os: nullable string
+    device_os_version: nullable string
+    device_token: nullable string
+    device_name: nullable string
+    app_version: nullable string
+    last_ip_address: nullable string
+    last_activity: nullable timestamp
+    is_social: tinyInteger
+    provider_id: nullable string
+    google_id: nullable string
+    provider: nullable string
+    provider_token: nullable string
+    branch_origin: nullable string
+    branch_origin_id: nullable string
+    remember_token: nullable string
+    softDeletes
+    relationships:
+      hasMany: Notification, Transaction, Request, Package, TalentPost
+
+  Notification:
+    user_id: id:user
+    title: text
+    body: text
+    is_read: tinyInteger
+    action_type: integer
+    action_id: integer
+
+  Category:
+    name: string
+    is_active: tinyInteger
+    image_wide: string
+    image_square: string
+    relationships:
+      hasMany: SubCategory, CategoryUser
+
+
+  CategoryUser:
+    user_id: id:user
+    category_id: id:category
+
+
+  SubCategory:
+    name: string
+    category_id: id:category
+
+  TalentDetails:
+    user_id: id:user
+    title: nullable string
+    about: nullable text
+    avatar: nullable string
+    social_instagram: nullable string
+    social_snapchat: nullable string
+    social_youtube: nullable string
+    social_twitter: nullable string
+    social_tik_tok: nullable string
+    status: nullable integer
+    is_featured: nullable tinyInteger
+    bank_name: nullable string
+    bank_account_owner: nullable string
+    bank_iban: nullable string
+
+  Request:
+    user_id: id:user
+    talent_user_id: id:user
+    type: integer
+    price: nullable double
+    details: nullable text
+    status: nullable integer
+    transaction_id: nullable integer
+    requested_delivery_date: nullable timestamp
+    completed_at: nullable timestamp
+    processed_at: nullable timestamp
+    relationships:
+      hasMany: Review, RequestAttachment, Service, Package
+
+
+  Transaction:
+    user_id: id:user
+    request_id: id:request
+    status: integer
+    amount: double
+    tap_customer_id: nullable string
+    tap_charge_id: nullable string
+    tap_status: nullable string
+    tap_response: nullable text
+    currency: string
+    payment_link: nullable string
+    is_success: tinyInteger
+    paid_at: nullable timestamp
+    usd_amount: nullable double
+    origin: nullable string
+
+  RequestAttachment:
+    request_id: id:request
+    file_type: integer
+    file_path: string
+    description: nullable text
+
+  Review:
+    request_id: id:request
+    rating: integer
+    details: nullable text
+
+  Service:
+    service_category_id: id:subcategory
+    name: string
+    description: longText
+    icon: nullable string
+
+  ServiceUser:
+    service_id: id:service
+    user_id: id:user
+    price: double
+    duration: nullable string
+    is_active: tinyInteger
+
+  Country:
+    name: string
+    country_code: string
+    phone_code: string
+    is_active: tinyInteger
+    softDeletes
+
+  UserVerification:
+    email: nullable string
+    country_id: id:country
+    phone: nullable string
+    token: nullable string
+    user_id: id:user
+    status: string
+
+  TalentPost:
+    user_id: id:user
+    media_url: string
+    media_type: integer
+    media_thumbnail_url: string
+    body: nullable string
+    is_featured: integer
+
+  Package:
+    user_id: id:user
+    name: string
+    price: double
+    description: nullable string
+
+  PackageService:
+    package_id: id:package
+    service_id: id:service
+
+  RequestService:
+    request_id: id:request
+    service_id: id:service
+
+  RequestPackage:
+    request_id: id:request
+    package_id: id:package
+
+  Settings:
+    name: nullable string
+    value: nullable string
+    description: nullable string
+    show_for_talent: nullable boolean
+    show_for_user: nullable boolean
+    softDeletes
+
+  RequestComment:
+    request_id: id:request
+    user_id: id:user
+    comment: longText

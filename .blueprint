@@ -1,0 +1,108 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/NotificationFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/CategoryUserFactory.php
+    - database/factories/SubCategoryFactory.php
+    - database/factories/TalentDetailsFactory.php
+    - database/factories/RequestFactory.php
+    - database/factories/TransactionFactory.php
+    - database/factories/RequestAttachmentFactory.php
+    - database/factories/ReviewFactory.php
+    - database/factories/ServiceFactory.php
+    - database/factories/ServiceUserFactory.php
+    - database/factories/CountryFactory.php
+    - database/factories/UserVerificationFactory.php
+    - database/factories/TalentPostFactory.php
+    - database/factories/PackageFactory.php
+    - database/factories/PackageServiceFactory.php
+    - database/factories/RequestServiceFactory.php
+    - database/factories/RequestPackageFactory.php
+    - database/factories/SettingsFactory.php
+    - database/factories/RequestCommentFactory.php
+    - database/migrations/2021_11_22_085634_create_users_table.php
+    - database/migrations/2021_11_22_085635_create_notifications_table.php
+    - database/migrations/2021_11_22_085636_create_categories_table.php
+    - database/migrations/2021_11_22_085637_create_category_users_table.php
+    - database/migrations/2021_11_22_085638_create_sub_categories_table.php
+    - database/migrations/2021_11_22_085639_create_talent_details_table.php
+    - database/migrations/2021_11_22_085640_create_requests_table.php
+    - database/migrations/2021_11_22_085641_create_transactions_table.php
+    - database/migrations/2021_11_22_085642_create_request_attachments_table.php
+    - database/migrations/2021_11_22_085643_create_reviews_table.php
+    - database/migrations/2021_11_22_085644_create_services_table.php
+    - database/migrations/2021_11_22_085645_create_service_users_table.php
+    - database/migrations/2021_11_22_085646_create_countries_table.php
+    - database/migrations/2021_11_22_085647_create_user_verifications_table.php
+    - database/migrations/2021_11_22_085648_create_talent_posts_table.php
+    - database/migrations/2021_11_22_085649_create_packages_table.php
+    - database/migrations/2021_11_22_085650_create_package_services_table.php
+    - database/migrations/2021_11_22_085651_create_request_services_table.php
+    - database/migrations/2021_11_22_085652_create_request_packages_table.php
+    - database/migrations/2021_11_22_085653_create_settings_table.php
+    - database/migrations/2021_11_22_085654_create_request_comments_table.php
+    - app/User.php
+    - app/Notification.php
+    - app/Category.php
+    - app/CategoryUser.php
+    - app/SubCategory.php
+    - app/TalentDetails.php
+    - app/Request.php
+    - app/Transaction.php
+    - app/RequestAttachment.php
+    - app/Review.php
+    - app/Service.php
+    - app/ServiceUser.php
+    - app/Country.php
+    - app/UserVerification.php
+    - app/TalentPost.php
+    - app/Package.php
+    - app/PackageService.php
+    - app/RequestService.php
+    - app/RequestPackage.php
+    - app/Settings.php
+    - app/RequestComment.php
+    - app/Nova/User.php
+    - app/Nova/Notification.php
+    - app/Nova/Category.php
+    - app/Nova/CategoryUser.php
+    - app/Nova/SubCategory.php
+    - app/Nova/TalentDetails.php
+    - app/Nova/Request.php
+    - app/Nova/Transaction.php
+    - app/Nova/RequestAttachment.php
+    - app/Nova/Review.php
+    - app/Nova/Service.php
+    - app/Nova/ServiceUser.php
+    - app/Nova/Country.php
+    - app/Nova/UserVerification.php
+    - app/Nova/TalentPost.php
+    - app/Nova/Package.php
+    - app/Nova/PackageService.php
+    - app/Nova/RequestService.php
+    - app/Nova/RequestPackage.php
+    - app/Nova/Settings.php
+    - app/Nova/RequestComment.php
+models:
+    User: { name: string, email: 'nullable string', email_verified_at: 'nullable timestamp', country_id: 'nullable string', phone: string, phone_verified_at: 'nullable timestamp', password: string, role_id: integer, is_blocked: tinyInteger, device_os: 'nullable string', device_os_version: 'nullable string', device_token: 'nullable string', device_name: 'nullable string', app_version: 'nullable string', last_ip_address: 'nullable string', last_activity: 'nullable timestamp', is_social: tinyInteger, provider_id: 'nullable string', google_id: 'nullable string', provider: 'nullable string', provider_token: 'nullable string', branch_origin: 'nullable string', branch_origin_id: 'nullable string', remember_token: 'nullable string', softdeletes: softDeletes, relationships: { hasMany: 'Notification, Transaction, Request, Package, TalentPost' } }
+    Notification: { user_id: 'id:user', title: text, body: text, is_read: tinyInteger, action_type: integer, action_id: integer }
+    Category: { name: string, is_active: tinyInteger, image_wide: string, image_square: string, relationships: { hasMany: 'SubCategory, CategoryUser' } }
+    CategoryUser: { user_id: 'id:user', category_id: 'id:category' }
+    SubCategory: { name: string, category_id: 'id:category' }
+    TalentDetails: { user_id: 'id:user', title: 'nullable string', about: 'nullable text', avatar: 'nullable string', social_instagram: 'nullable string', social_snapchat: 'nullable string', social_youtube: 'nullable string', social_twitter: 'nullable string', social_tik_tok: 'nullable string', status: 'nullable integer', is_featured: 'nullable tinyInteger', bank_name: 'nullable string', bank_account_owner: 'nullable string', bank_iban: 'nullable string' }
+    Request: { user_id: 'id:user', talent_user_id: 'id:user', type: integer, price: 'nullable double', details: 'nullable text', status: 'nullable integer', transaction_id: 'nullable integer', requested_delivery_date: 'nullable timestamp', completed_at: 'nullable timestamp', processed_at: 'nullable timestamp', relationships: { hasMany: 'Review, RequestAttachment, Service, Package' } }
+    Transaction: { user_id: 'id:user', request_id: 'id:request', status: integer, amount: double, tap_customer_id: 'nullable string', tap_charge_id: 'nullable string', tap_status: 'nullable string', tap_response: 'nullable text', currency: string, payment_link: 'nullable string', is_success: tinyInteger, paid_at: 'nullable timestamp', usd_amount: 'nullable double', origin: 'nullable string' }
+    RequestAttachment: { request_id: 'id:request', file_type: integer, file_path: string, description: 'nullable text' }
+    Review: { request_id: 'id:request', rating: integer, details: 'nullable text' }
+    Service: { service_category_id: 'id:subcategory', name: string, description: longText, icon: 'nullable string' }
+    SubService: { service_id: 'id:service', name: string }
+    ServiceUser: { service_id: 'id:service', user_id: 'id:user', price: double, duration: 'nullable string', is_active: tinyInteger }
+    Country: { name: string, country_code: string, phone_code: string, is_active: tinyInteger, softdeletes: softDeletes }
+    UserVerification: { email: 'nullable string', country_id: 'id:country', phone: 'nullable string', token: 'nullable string', user_id: 'id:user', status: string }
+    TalentPost: { user_id: 'id:user', media_url: string, media_type: integer, media_thumbnail_url: string, body: 'nullable string', is_featured: integer }
+    Package: { user_id: 'id:user', name: string, price: double, description: 'nullable string' }
+    PackageService: { package_id: 'id:package', service_id: 'id:service' }
+    RequestService: { request_id: 'id:request', service_id: 'id:service' }
+    RequestPackage: { request_id: 'id:request', package_id: 'id:package' }
+    Settings: { name: 'nullable string', value: 'nullable string', description: 'nullable string', show_for_talent: 'nullable boolean', show_for_user: 'nullable boolean', softdeletes: softDeletes }
+    RequestComment: { request_id: 'id:request', user_id: 'id:user', comment: longText }
